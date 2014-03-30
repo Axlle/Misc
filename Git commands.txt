@@ -1,0 +1,9 @@
+git show <rev>:<file>					# Show file from revision
+git push origin --delete branch				# Delete remote branch
+git remote prune origin					# Delete branches that are no longer on the origin
+
+git rebase --onto master <parent of oldest> <newest>	# Rebase range of commits
+
+git rm --cached <file>					# Stop tracking
+
+git merge --ff-only master				# Brings a merged branch up-to-date with master

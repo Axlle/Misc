@@ -1,0 +1,10 @@
+[alias]
+	supdate = submodule update --init --recursive
+	lg = log --graph --pretty=format:'%C(red)%h %C(reset)-%C(green)%d %C(reset)%s %C(magenta)(%cr) %C(bold blue)<%an>%C(reset)'
+	lf = log --graph --pretty=short --decorate --stat
+	stashshot = "!git stash; git stash apply"
+	common = merge-base HEAD
+[push]
+	default = simple
+[color]
+	ui = true
