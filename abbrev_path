@@ -1,0 +1,22 @@
+#!/usr/bin/awk -f
+
+BEGIN { 
+    FS="/";
+    OFS="/";
+}
+{
+    if (NF > 3 && length($0) > 30) {
+        rem = 30 - length($1) - length($(NF - 1)) - length($NF) - (NF - 1);
+        len = rem / (NF - 3);
+        if (len < 3) {
+            len = 3;
+        }
+        for (i = 2; i < NF - 1; i++) {
+            if (length($i) > 3) {
+                $i = substr($i, 1, len - 2) "..";
+            }
+        }
+    }
+    print;
+}
+

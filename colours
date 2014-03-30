@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# The escape sequence for 'Esc' may be \e, \E, \033, or \x1b
+for bold in {0..1}
+do
+    for basic in {0..7}
+    do
+        let 'n = bold * 8 + basic'
+        printf '\e[38;5;%dm%08d\e[0m ' $n $n
+    done
+    echo
+done
+echo
+
+for red in {0..5}
+do
+    for green in {0..5}
+    do
+        let 'inset = green + 1'
+        printf "%${inset}s" ' '
+        for blue in {0..5}
+        do
+            let 'n = red * 36 + green * 6 + blue + 16'
+            printf '\e[38;5;%dm%08d\e[0m ' $n $n
+        done
+        echo
+    done
+done
+echo
+
+for grey in {0..23}
+do
+    let 'n = grey + 232'
+    printf '\e[38;5;%dm%08d\e[0m\n' $n $n
+done
+

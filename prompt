@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Selects a colour for the prompt that wasn't used by the previous terminal
+function init_prompt() {
+    # 0=black, 1=red, 2=green, 3=yellow, 4=blue, 5=magenta, 6=cyan, 7=grey
+    export BASH_COLOUR=$(cat ~/.bash_colour)
+    let 'BASH_COLOUR = (BASH_COLOUR + RANDOM % 3) % 4 + 1'
+    echo $BASH_COLOUR > ~/.bash_colour
+    if [[ "$BASH_COLOUR" -ge 3 ]]; then
+        let 'BASH_COLOUR += 32' # Skip yellow and blue
+    else
+        let 'BASH_COLOUR += 30'
+    fi
+    export PROMPT_COMMAND=update_prompt
+}
+
+# Sets the prompt with the current directory, git branch and git status
+function update_prompt() {
+    local host=${HOSTNAME%.local}
+    local user=$USER
+
+    local colour="\[\e[${BASH_COLOUR}m\]"
+    local reset="\[\e[0m\]"
+
+    local repo=$(git rev-parse --show-toplevel 2> /dev/null)
+    if [[ ! -z "$repo" ]]; then
+        local red='\[\e[31m\]'
+        local green='\[\e[32m\]'
+        local yellow='\[\e[33m\]'
+    
+        local branch='HEAD'
+        if [[ ! -z $(git branch) ]]; then
+            branch=$(git rev-parse --abbrev-ref HEAD)
+        fi
+        local stat=$(git status --porcelain)
+
+        local warn=$green
+        if [[ ! -z $(echo "$stat" | cut -c1-2 | grep 'U') ]]; then
+            # Contains conflicts
+            warn=$red
+        elif [[ ! -z "$stat" ]]; then
+            # Contains modifications
+            warn=$yellow
+        fi
+        
+        local base=$(basename "$repo")
+        local path=$(echo "${PWD#$repo}" | abbrev_path)
+
+        export PS1="${colour}${host}:${reset}${base}${warn}($branch)${reset}${path} ${colour}$user\$${reset} "
+    else
+        local path=$PWD
+        if [[ "$path" =~ ^"$HOME"(/|$) ]]; then
+            path="~${path#$HOME}"
+        fi
+        path=$(echo "$path" | abbrev_path)
+        
+        export PS1="${colour}${host}:${reset}${path} ${colour}${user}\$${reset} "
+    fi
+}
+
