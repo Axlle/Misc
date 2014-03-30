@@ -1,3 +1,4 @@
+#!/bin/bash
 
 source ${MISC_ROOT}/prompt
 init_prompt

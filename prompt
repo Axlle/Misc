@@ -46,7 +46,7 @@ function update_prompt() {
         local base=$(basename "$repo")
         local path=$(echo "${PWD#$repo}" | $MISC_ROOT/abbrev_path)
 
-        export PS1="${colour}${host}:${reset}${base}${warn}($branch)${reset}${path} ${colour}$user\$${reset} "
+        export PS1="${colour}${host}:${reset}${base}${warn}(${branch})${reset}${path} ${colour}${user}\$${reset} "
     else
         local path=$PWD
         if [[ "$path" =~ ^"$HOME"(/|$) ]]; then
