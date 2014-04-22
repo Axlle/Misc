@@ -1,0 +1,9 @@
+
+# Print registers
+register read
+
+# Print stack
+memory read -s4 -l1 -fx -c8 $esp
+
+# Print arguments and local variables
+frame variable
