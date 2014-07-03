@@ -12,9 +12,7 @@ BEGIN {
             len = 3;
         }
         for (i = 2; i < NF - 1; i++) {
-            if (length($i) > 3) {
-                $i = substr($i, 1, len - 2) "..";
-            }
+            $i = substr($i, 1, len - 2) "..";
         }
     }
     print;
