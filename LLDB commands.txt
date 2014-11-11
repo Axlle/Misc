@@ -7,3 +7,28 @@ memory read -s4 -l1 -fx -c8 $esp
 
 # Print arguments and local variables
 frame variable
+
+### Calling conventions
+# (From https://developer.apple.com/library/ios/technotes/tn2239/_index.html
+#   and http://infocenter.arm.com/help/topic/com.arm.doc.ihi0055b/IHI0055B_aapcs64.pdf)
+
+# 32-bit simulator
+p/a $esp    # return address
+po  $esp+4  # self
+p/a $esp+8  # _cmd
+po  $esp+12 # arg1
+
+# 64-bit simulator
+po  $rdi # self
+p/a $rsi # _cmd
+po  $rdx # arg1
+
+# 64-bit device
+p/a $lr # return address
+po  $x0 # self
+p/a $x1 # _cmd
+po  $x2 # arg1
+
+# Symbolicate crash
+export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+/Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Resources/symbolicatecrash -v "Inkling Pro_2014-10-10-105454_Kevins-iPad.crash" "Inkling Pro.app"
