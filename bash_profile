@@ -6,5 +6,5 @@ source "$MISC_ROOT/prompt"
 init_prompt
 
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
-alias ll='ls -lGh'
+alias ll='ls -f1 -lGh'
 
