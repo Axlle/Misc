@@ -15,7 +15,25 @@ done
 
 git blame <commit>^ -- <files>				# Show blame of blame
 
+git branch --no-merge					# Show unmerged branches
+							# Show unpushed branches
+git log --branches --not --remotes --simplify-by-decoration --decorate --oneline
+
 
 							# Ignore Crashlytics
 find vendor/Crashlytics.framework -type f | xargs git update-index --[no-]assume-unchanged
-	
+
+
+# Converting a directory into a submodule
+# From http://stackoverflow.com/questions/17413493/create-a-submodule-repository-from-a-folder-and-keep-its-git-commit-history
+git clone <git repository A url>
+cd <git repository A>
+git remote rm origin
+git filter-branch --subdirectory-filter <directory B> -- --all
+# remove all tags
+git remote add origin <git repository B url> # from GitHub
+git push -u origin master
+
+cd <git repository A (again)>
+git rm -r <directory B>
+git submodule add -b master <git repository B url>
