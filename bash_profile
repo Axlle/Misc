@@ -8,3 +8,13 @@ init_prompt
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 alias ll='ls -f1 -lGh'
 
+alias prettyjson='python -m json.tool'
+
+function grepdir () {
+    grep -lr "$1" .
+}
+
+function img () {
+    sips --getProperty pixelWidth --getProperty pixelHeight $1
+}
+
