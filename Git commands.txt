@@ -1,5 +1,5 @@
 git show <rev>:<file>					# Show file from revision
-git push origin --delete <branch>			# Delete remote branch
+git push --delete origin <branch>			# Delete remote branch
 git remote prune origin					# Delete local branches that are no longer on the origin
 
 git rebase --onto master <parent of oldest> <newest>	# Rebase range of commits
@@ -19,6 +19,7 @@ git branch --no-merge					# Show unmerged branches
 							# Show unpushed branches
 git log --branches --not --remotes --simplify-by-decoration --decorate --oneline
 
+git config -f <config file> alias.<alias> '<command>'	# Create an alias
 
 							# Ignore Crashlytics
 find vendor/Crashlytics.framework -type f | xargs git update-index --[no-]assume-unchanged
