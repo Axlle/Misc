@@ -12,22 +12,20 @@ frame variable
 # (From https://developer.apple.com/library/ios/technotes/tn2239/_index.html
 #   and http://infocenter.arm.com/help/topic/com.arm.doc.ihi0055b/IHI0055B_aapcs64.pdf)
 
-# 32-bit simulator
-p/a $esp    # return address
-po  $esp+4  # self
-p/a $esp+8  # _cmd
-po  $esp+12 # arg1
+                 x86      x64     armv7   arm64
+-----------------------------------------------
+Return address  $esp              $lr     $lr
+          self  $esp+4   $rdi     $r0     $x0
+          _cmd  $esp+8   $rsi     $r1     $x1
+          arg1  $esp+12  $rdx     $r2     $x2
+          arg2           $rcx     $r3     $x3
+          arg3           $r8      $sp+??  $x4
+          arg4           $r9      $sp+??  $x5
+          arg5           $rbp+16          $x6
+          arg6           $rbp+24          $x7
+          arg7                            $sp+??
+          arg8                            $sp+??
 
-# 64-bit simulator
-po  $rdi # self
-p/a $rsi # _cmd
-po  $rdx # arg1
-
-# 64-bit device
-p/a $lr # return address
-po  $x0 # self
-p/a $x1 # _cmd
-po  $x2 # arg1
 
 # Symbolicate crash
 export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
