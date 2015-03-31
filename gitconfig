@@ -5,7 +5,9 @@
 	ld = log -p
 	stashshot = "!git stash; git stash apply"
 	common = merge-base HEAD
-	blames = blame -c --date=short
+	bf = blame -c --date=short
+	bumpdate = submodule update --remote
+	assume-unchanged = !git ls-files -v | grep \"^[[:lower:]]\"
 [push]
 	default = simple
 [color]
