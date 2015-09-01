@@ -3,14 +3,14 @@
 # Selects a colour for the prompt that wasn't used by the previous terminal
 function init_prompt() {
     # 0=black, 1=red, 2=green, 3=yellow, 4=blue, 5=magenta, 6=cyan, 7=grey
-    export BASH_COLOUR=$(cat ~/.bash_colour)
-    let 'BASH_COLOUR = (BASH_COLOUR + RANDOM % 3) % 4 + 1'
-    echo $BASH_COLOUR > ~/.bash_colour
-    if [[ "$BASH_COLOUR" -ge 3 ]]; then
-        let 'BASH_COLOUR += 32' # Skip yellow and blue
+    if [[ -f ~/.bash_colour ]]; then
+        export BASH_COLOUR=$(cat ~/.bash_colour)
     else
-        let 'BASH_COLOUR += 30'
+        export BASH_COLOUR=0
     fi
+    let 'BASH_COLOUR = (BASH_COLOUR + 1) % 6'
+    echo $BASH_COLOUR > ~/.bash_colour
+    let 'BASH_COLOUR += 31'
     export PROMPT_COMMAND=update_prompt
 }
 
