@@ -12,3 +12,6 @@
 	default = simple
 [color]
 	ui = true
+[core]
+    # git's version of vim fails to save after a bad command, this fixes that
+    editor = /usr/bin/vim
