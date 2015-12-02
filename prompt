@@ -8,9 +8,13 @@ function init_prompt() {
     else
         export BASH_COLOUR=0
     fi
-    let 'BASH_COLOUR = (BASH_COLOUR + 1) % 6'
+    let 'BASH_COLOUR = (BASH_COLOUR + 1) % 4'
     echo $BASH_COLOUR > ~/.bash_colour
-    let 'BASH_COLOUR += 31'
+    if [[ "$BASH_COLOUR" -ge 2 ]]; then
+        let 'BASH_COLOUR += 33'
+    else
+        let 'BASH_COLOUR += 31'
+    fi
     export PROMPT_COMMAND=update_prompt
 }
 
