@@ -9,14 +9,14 @@ function update_prompt() {
     local host=${HOSTNAME%.local}
     local user=$USER
 
-    local reset="\[\e[0m\]"
+    local reset='\[\e[0m\]'
+    local red='\[\e[31m\]'
+    local green='\[\e[32m\]'
+    local yellow='\[\e[33m\]'
 
-    local repo=$(git rev-parse --show-toplevel 2> /dev/null)
-    if [[ ! -z "$repo" ]]; then
-        local red='\[\e[31m\]'
-        local green='\[\e[32m\]'
-        local yellow='\[\e[33m\]'
-    
+    if [[ $(git rev-parse --is-inside-work-tree) == "true" ]]; then
+        local repo=$(git rev-parse --show-toplevel)
+
         local branch='HEAD'
         if [[ ! -z $(git branch) ]]; then
             # Get the current branch name or use "HEAD" if repo is newly initialized
