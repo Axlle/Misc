@@ -1,0 +1,12 @@
+Title: Measure Runtime
+Summary:
+Platform: All
+Language: Objective-C
+Completion Shortcut: gettimeofday snippet
+Completion Scopes: Function or Method
+
+struct timeval start, finish;
+gettimeofday(&start, NULL);
+<#code to measure#>
+gettimeofday(&finish, NULL);
+NSLog(@"runtime = %gms", (finish.tv_sec - start.tv_sec) * 1000.0 + (finish.tv_usec - start.tv_usec) / 1000.0);
