@@ -44,3 +44,26 @@ git push -u origin master
 cd <git repository A (again)>
 git rm -r <directory B>
 git submodule add -b master <git repository B url>
+
+
+
+# Converting a submodule into a directory
+# From http://x3ro.de/2013/09/01/Integrating-a-submodule-into-the-parent-repository.html
+git clone git@git.inkling.com:ios/inkling-ipad.git
+git clone git@git.inkling.com:ios/S9TestUtils.git
+
+cd S9TestUtils
+../git-rewrite-to-subfolder
+
+cd ../inkling-ipad
+rm -r S9TestUtils # should be an empty directory
+vim .gitmodules
+git add --all
+git commit
+git remote add S9TestUtils ../S9TestUtils
+git fetch S9TestUtils
+git merge -s ours --no-commit --allow-unrelated-histories S9TestUtils/master
+git clone git@git.inkling.com:ios/S9TestUtils.git
+rm -rf S9TestUtils/.git
+git add S9TestUtils
+git commit
