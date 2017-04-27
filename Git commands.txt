@@ -22,6 +22,11 @@ git blame <commit>^ -- <files>				# Show blame of blame
 git branch --no-merge					# Show unmerged branches
 							# Show unpushed branches
 git log --branches --not --remotes --simplify-by-decoration --decorate --oneline
+							# Show branches by date
+for k in `git branch|perl -pe s/^..//`
+do
+    echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k|head -n 1`\\t$k
+done|sort -r
 
 git config -f <config file> alias.<alias> '<command>'	# Create an alias
 
