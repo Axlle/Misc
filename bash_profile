@@ -6,7 +6,7 @@ source "$MISC_ROOT/prompt"
 init_prompt
 
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
-alias ll='ls -f1 -lGh'
+alias ll='ls -alGh'
 
 alias prettyjson='python -m json.tool'
 
