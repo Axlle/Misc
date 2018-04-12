@@ -9,3 +9,5 @@ set shiftwidth=4
 
 set hlsearch
 set ignorecase
+
+set textwidth=72
