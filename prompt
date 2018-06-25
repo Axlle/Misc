@@ -48,8 +48,9 @@ function update_prompt() {
             warn=$yellow
         fi
         
+        local pwd_phys=$(pwd -P)
         local base=$(basename "$repo")
-        local path=$(echo "${PWD#$repo}" | $MISC_ROOT/abbrev_path)
+        local path=$(echo "${pwd_phys#$repo}" | $MISC_ROOT/abbrev_path)
 
         export PS1="${colour}${host}:${reset}${base}${warn}(${branch})${reset}${path} ${colour}${user}\$${reset} "
     else
