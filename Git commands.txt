@@ -1,40 +1,60 @@
-git show <rev>:<file>					# Show file from revision
-git push --delete origin <branch>			# Delete remote branch
-git remote prune origin				# Delete local branches that are no longer on the origin
 
-git rebase --onto master <parent of oldest> <newest>	# Rebase range of commits
+### Working tree
 
-git rm --cached <file>					# Stop tracking
-git rm <submodule>                                   # Remove a submodule completely
+git rm --cached <file>                                  # Stop tracking a file
+git rm <submodule>                                      # Remove a submodule completely
+                                                        # Ignore Crashlytics
+find vendor/Crashlytics.framework -type f | xargs git update-index --[no-]assume-unchanged
 
-git merge --ff-only master				# Brings a merged branch up-to-date with master
 
-git push origin tag 1.0.0				# Push a tag
-git push origin :1.0.0 				# Delete a tag from remote
+### Merge & Rebase
 
-for t in `git tag`					# Delete all tags
+git rebase --onto master <parent of oldest> <newest>    # Rebase range of commits
+git merge --ff-only master                              # Brings a merged branch up-to-date with master
+
+
+### Push
+
+git push origin tag 1.0.0                               # Push a tag
+git push -u origin <branch>                             # Push and set the remote tracking branch
+
+
+### Delete
+
+git push --delete origin <branch>                       # Delete remote branch
+git remote prune origin                                 # Delete local branches that are no longer on the origin
+git push origin :1.0.0                                  # Delete a tag from remote
+
+for t in `git tag`                                      # Delete all tags
 do
     git tag -d $t
 done
 
-git blame <commit>^ -- <files>				# Show blame of blame
 
-git branch --no-merge					# Show unmerged branches
-							# Show unpushed branches
+### Show
+
+git show <rev>:<file>                                   # Show file from revision
+git blame <commit>^ -- <files>                          # Show blame of blame
+git branch -vv                                          # Show tracking branches
+git branch --no-merge                                   # Show unmerged branches
+                                                        # Show unpushed branches
 git log --branches --not --remotes --simplify-by-decoration --decorate --oneline
-							# Show branches by date
+                                                        # Show command line graph (lg)
+git log --graph --pretty=format:'%C(red)%h %C(reset)-%C(green)%d %C(reset)%s %C(magenta)(%cr) %C(bold blue)<%an>%C(reset)'
+git lg origin/release/4.0.9..origin/release/4.1.0       # Show changes between branches
+                                                        # Show branches by date
 for k in `git branch|perl -pe s/^..//`
 do
     echo -e `git show --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" $k|head -n 1`\\t$k
 done|sort -r
 
+
+### Config
+
 git config -f <config file> alias.<alias> '<command>'	# Create an alias
 
-							# Ignore Crashlytics
-find vendor/Crashlytics.framework -type f | xargs git update-index --[no-]assume-unchanged
 
-git lg origin/release/4.0.9..origin/release/4.1.0	# Show changes between branches
-lg=log --graph --pretty=format:'%C(red)%h %C(reset)-%C(green)%d %C(reset)%s %C(magenta)(%cr) %C(bold blue)<%an>%C(reset)'
+### Other
 
 # Converting a directory into a submodule
 # From http://stackoverflow.com/questions/17413493/create-a-submodule-repository-from-a-folder-and-keep-its-git-commit-history
