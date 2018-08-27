@@ -5,6 +5,7 @@ Language: Objective-C
 Completion Shortcut: gettimeofday snippet
 Completion Scopes: Function or Method
 
+// #import <sys/time.h>
 struct timeval start, finish;
 gettimeofday(&start, NULL);
 <#code to measure#>
