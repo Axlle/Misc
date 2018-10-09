@@ -15,6 +15,9 @@
 [core]
     # git's version of vim fails to save after a bad command, this fixes that
     editor = /usr/bin/vim
+[merge]
+    renamelimit = 4096
+    tool = opendiff
 #
 # For Reference:
 #
