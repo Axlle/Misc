@@ -1,0 +1,18 @@
+### Commands
+
+u                          # Undo
+d (ie. dd)                 # Delete
+p (ie. pp)                 # Paste
+y (ie. yy)                 # Yank (aka. Copy) 
+
+:set paste                 # Disable auto-indent on paste
+:set nopaste
+
+/search                    # Search
+:set nohl                  # Cancel search highlight
+
+:%s/find/replace/g         # Find and replace pattern (note: \r is newline, not \n)
+
+:w [filename]              # Write (aka. Save)
+:q                         # Quit
+:q!                        # Quit, no save
