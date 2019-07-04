@@ -1,1 +1,3 @@
 command alias -- so thread step-out
+command alias -- rd expression -O -- [[UIWindow keyWindow] recursiveDescription]
+command alias -- alt expression -O -- [[UIWindow keyWindow] _autolayoutTrace]
