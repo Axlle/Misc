@@ -4,7 +4,7 @@
 git rm --cached <file>                                  # Stop tracking a file
 git rm <submodule>                                      # Remove a submodule completely
                                                         # Ignore Crashlytics
-find vendor/Crashlytics.framework -type f | xargs git update-index --[no-]assume-unchanged
+find vendor/Crashlytics.framework -type f -print0 | xargs -0 git update-index --[no-]assume-unchanged
 
 
 ### Merge & Rebase
