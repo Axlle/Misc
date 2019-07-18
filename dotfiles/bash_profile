@@ -10,12 +10,16 @@ alias ll='ls -alGh'
 
 alias prettyjson='python -m json.tool'
 
-function grepdir () {
+function grepdir() {
     grep -lr "$1" .
 }
 
-function img () {
+function img() {
     sips --getProperty pixelWidth --getProperty pixelHeight $1
+}
+
+function branch() {
+    echo $(git rev-parse --abbrev-ref HEAD 2> /dev/null)
 }
 
 export PATH="/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/:$PATH"
