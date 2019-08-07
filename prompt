@@ -2,20 +2,36 @@
 
 # Selects a colour for the prompt that wasn't used by the previous terminal
 function init_prompt() {
-    # 0=black, 1=red, 2=green, 3=yellow, 4=blue, 5=magenta, 6=cyan, 7=grey
-    if [[ -f ~/.bash_colour ]]; then
-        export BASH_COLOUR=$(cat ~/.bash_colour)
+    # 0=black, 1=red, 2=green, 3=yellow, 4=blue, 5=magenta, 6=cyan, 7=grey, 8-15=bright variants
+    if [[ $SHELL == "/bin/zsh" ]]; then
+        if [[ -f ~/.zsh_colour ]]; then
+            export ZSH_COLOUR=$(cat ~/.zsh_colour)
+        else
+            export ZSH_COLOUR=0
+        fi
+        let 'ZSH_COLOUR = (ZSH_COLOUR + 1) % 5'
+        echo "$ZSH_COLOUR" > ~/.zsh_colour
+        if [[ "ZSH_COLOUR" -ge 3 ]]; then
+            let 'ZSH_COLOUR += 10'
+        else
+            let 'ZSH_COLOUR += 9'
+        fi
+        precmd_functions=(update_prompt)
     else
-        export BASH_COLOUR=0
+        if [[ -f ~/.bash_colour ]]; then
+            export BASH_COLOUR=$(cat ~/.bash_colour)
+        else
+            export BASH_COLOUR=0
+        fi
+        let 'BASH_COLOUR = (BASH_COLOUR + 1) % 4'
+        echo $BASH_COLOUR > ~/.bash_colour
+        if [[ "$BASH_COLOUR" -ge 2 ]]; then
+            let 'BASH_COLOUR += 33'
+        else
+            let 'BASH_COLOUR += 31'
+        fi
+        export PROMPT_COMMAND=update_prompt
     fi
-    let 'BASH_COLOUR = (BASH_COLOUR + 1) % 4'
-    echo $BASH_COLOUR > ~/.bash_colour
-    if [[ "$BASH_COLOUR" -ge 2 ]]; then
-        let 'BASH_COLOUR += 33'
-    else
-        let 'BASH_COLOUR += 31'
-    fi
-    export PROMPT_COMMAND=update_prompt
 }
 
 # Sets the prompt with the current directory, git branch and git status
@@ -23,14 +39,25 @@ function update_prompt() {
     local host=${HOSTNAME%.local}
     local user=$USER
 
-    local colour="\[\e[${BASH_COLOUR}m\]"
-    local reset="\[\e[0m\]"
+    if [[ $SHELL == "/bin/zsh" ]]; then
+        local colour="%F{$ZSH_COLOUR}"
+        local reset="%f"
+    else
+        local colour="\[\e[${BASH_COLOUR}m\]"
+        local reset="\[\e[0m\]"
+    fi
 
     local repo=$(git rev-parse --show-toplevel 2> /dev/null)
     if [[ ! -z "$repo" ]]; then
-        local red='\[\e[31m\]'
-        local green='\[\e[32m\]'
-        local yellow='\[\e[33m\]'
+        if [[ $SHELL == "/bin/zsh" ]]; then
+            local red='%F{9}'
+            local green='%F{10}'
+            local yellow='%F{11}'
+        else
+            local red='\[\e[31m\]'
+            local green='\[\e[32m\]'
+            local yellow='\[\e[33m\]'
+        fi
     
         local branch='HEAD'
         if [[ ! -z $(git branch) ]]; then
@@ -52,7 +79,11 @@ function update_prompt() {
         local base=$(basename "$repo")
         local path=$(echo "${pwd_phys#$repo}" | $MISC_ROOT/abbrev_path)
 
-        export PS1="${colour}${host}:${reset}${base}${warn}(${branch})${reset}${path} ${colour}${user}\$${reset} "
+        if [[ $SHELL == "/bin/zsh" ]]; then
+            export PROMPT="${colour}%n@%m${reset} ${base}${warn}(${branch})${reset}${path} ${colour}%#${reset} "
+        else
+            export PS1="${colour}${host}:${reset}${base}${warn}(${branch})${reset}${path} ${colour}${user}\$${reset} "
+        fi
     else
         local path=$PWD
         if [[ "$path" =~ ^"$HOME"(/|$) ]]; then
@@ -60,7 +91,11 @@ function update_prompt() {
         fi
         path=$(echo "$path" | $MISC_ROOT/abbrev_path)
         
-        export PS1="${colour}${host}:${reset}${path} ${colour}${user}\$${reset} "
+        if [[ $SHELL == "/bin/zsh" ]]; then
+            export PROMPT="${colour}%n@%m${reset} %1~ ${colour}%#${reset} "
+        else
+            export PS1="${colour}${host}:${reset}${path} ${colour}${user}\$${reset} "
+        fi
     fi
 }
 
