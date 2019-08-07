@@ -42,6 +42,7 @@ git log --branches --not --remotes --simplify-by-decoration --decorate --oneline
                                                         # Show command line graph (lg)
 git log --graph --pretty=format:'%C(red)%h %C(reset)-%C(green)%d %C(reset)%s %C(magenta)(%cr) %C(bold blue)<%an>%C(reset)'
 git lg origin/release/4.0.9..origin/release/4.1.0       # Show changes between branches
+git log -S<text>                                        # Search history for term
                                                         # Show branches by date
 for k in `git branch|perl -pe s/^..//`
 do
