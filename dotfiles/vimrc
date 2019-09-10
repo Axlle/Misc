@@ -10,4 +10,6 @@ set shiftwidth=4
 set hlsearch
 set ignorecase
 
+colorscheme default
+
 "set textwidth=72
