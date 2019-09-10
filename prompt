@@ -9,15 +9,15 @@ function init_prompt() {
         else
             export ZSH_COLOUR=0
         fi
-        let 'ZSH_COLOUR = (ZSH_COLOUR + 1) % 5'
+        let 'ZSH_COLOUR = (ZSH_COLOUR + 1) % 4'
         echo "$ZSH_COLOUR" > ~/.zsh_colour
-        if [[ "ZSH_COLOUR" -ge 3 ]]; then
-            let 'ZSH_COLOUR += 10'
+        if [[ "ZSH_COLOUR" -ge 2 ]]; then
+            let 'ZSH_COLOUR += 3'
         else
-            let 'ZSH_COLOUR += 9'
+            let 'ZSH_COLOUR += 1'
         fi
         precmd_functions=(update_prompt)
-    else
+    elif [[ $SHELL == "bin/bash" ]]; then
         if [[ -f ~/.bash_colour ]]; then
             export BASH_COLOUR=$(cat ~/.bash_colour)
         else
@@ -31,6 +31,8 @@ function init_prompt() {
             let 'BASH_COLOUR += 31'
         fi
         export PROMPT_COMMAND=update_prompt
+    else
+        echo "Unknown shell. Will not configure prompt colour."
     fi
 }
 
@@ -50,9 +52,9 @@ function update_prompt() {
     local repo=$(git rev-parse --show-toplevel 2> /dev/null)
     if [[ ! -z "$repo" ]]; then
         if [[ $SHELL == "/bin/zsh" ]]; then
-            local red='%F{9}'
-            local green='%F{10}'
-            local yellow='%F{11}'
+            local red='%F{1}'
+            local green='%F{2}'
+            local yellow='%F{3}'
         else
             local red='\[\e[31m\]'
             local green='\[\e[32m\]'
