@@ -17,7 +17,7 @@ function init_prompt() {
             let 'ZSH_COLOUR += 1'
         fi
         precmd_functions=(update_prompt)
-    elif [[ $SHELL == "bin/bash" ]]; then
+    elif [[ $SHELL == "/bin/bash" ]]; then
         if [[ -f ~/.bash_colour ]]; then
             export BASH_COLOUR=$(cat ~/.bash_colour)
         else
