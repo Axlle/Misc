@@ -8,6 +8,7 @@
 	bf = blame -c --date=short
 	bumpdate = submodule update --remote
 	assume-unchanged = !git ls-files -v | grep \"^[[:lower:]]\"
+	prune-local = !git branch -vv | awk '/: gone]/{print $1}' > /tmp/branches_to_delete && vim /tmp/branches_to_delete && xargs git branch -D </tmp/branches_to_delete
 [push]
 	default = simple
 [color]
