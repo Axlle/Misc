@@ -16,7 +16,7 @@ function init_prompt() {
         else
             let 'ZSH_COLOUR += 1'
         fi
-        precmd_functions=(update_prompt)
+        precmd_functions+=(update_prompt)
     elif [[ $SHELL == "/bin/bash" ]]; then
         if [[ -f ~/.bash_colour ]]; then
             export BASH_COLOUR=$(cat ~/.bash_colour)
@@ -60,7 +60,7 @@ function update_prompt() {
             local green='\[\e[32m\]'
             local yellow='\[\e[33m\]'
         fi
-    
+
         local branch='HEAD'
         if [[ ! -z $(git branch) ]]; then
             # Get the current branch name or use "HEAD" if repo is newly initialized
@@ -76,7 +76,7 @@ function update_prompt() {
             # Contains modifications
             warn=$yellow
         fi
-        
+
         local pwd_phys=$(pwd -P)
         local base=$(basename "$repo")
         local path=$(echo "${pwd_phys#$repo}" | $MISC_ROOT/abbrev_path)
@@ -92,7 +92,7 @@ function update_prompt() {
             path="~${path#$HOME}"
         fi
         path=$(echo "$path" | $MISC_ROOT/abbrev_path)
-        
+
         if [[ $SHELL == "/bin/zsh" ]]; then
             export PROMPT="${colour}%n@%m${reset} %1~ ${colour}%#${reset} "
         else
