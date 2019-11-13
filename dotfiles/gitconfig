@@ -16,6 +16,8 @@
 [core]
     # git's version of vim fails to save after a bad command, this fixes that
     editor = /usr/bin/vim
+    # https://stackoverflow.com/questions/48341920/git-branch-command-behaves-like-less
+    pager = less -FRX
 [merge]
     renamelimit = 4096
     tool = opendiff
