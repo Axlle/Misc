@@ -53,7 +53,7 @@ done|sort -r
 ### Config
 
 git config -f <config file> alias.<alias> '<command>'	# Create an alias
-
+git config --get-regexp '^alias\.'                      # List aliases
 
 ### Other
 
