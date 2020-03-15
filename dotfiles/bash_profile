@@ -7,7 +7,7 @@ init_prompt
 
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 alias ll='ls -alGh'
-
+alias open-xcode='open $(dirname $(dirname $(xcode-select -p)))'
 alias prettyjson='python -m json.tool'
 
 function grepdir() {
