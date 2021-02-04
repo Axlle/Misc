@@ -50,10 +50,20 @@ do
 done|sort -r
 
 
+### Cherry-pick
+
+# Cherry-pick with manual file rename
+# https://stackoverflow.com/questions/32843857/git-cherry-pick-with-target-file-renamed
+git format-patch <commit> -1
+# edit paths in 0001.patch
+git am 0001.patch
+
+
 ### Config
 
 git config -f <config file> alias.<alias> '<command>'	# Create an alias
 git config --get-regexp '^alias\.'                      # List aliases
+
 
 ### Other
 
