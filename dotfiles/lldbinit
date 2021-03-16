@@ -1,3 +1,4 @@
 command alias -- so thread step-out
 command alias -- rd expression -O -- [[UIWindow keyWindow] recursiveDescription]
+command alias -- rdvc expression -O -- [[[UIWindow keyWindow] rootViewController] recursiveDescription]
 command alias -- alt expression -O -- [[UIWindow keyWindow] _autolayoutTrace]
