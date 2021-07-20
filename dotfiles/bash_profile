@@ -11,7 +11,7 @@ alias open-xcode='open $(dirname $(dirname $(xcode-select -p)))'
 alias prettyjson='python -m json.tool'
 
 function grepdir() {
-    grep -lr "$1" .
+    grep -ilr "$1" .
 }
 
 function img() {
